@@ -1,0 +1,11 @@
+subscriber port:
+http://localhost:9999
+
+Valid Sensor tag:
+3078E7D4141ADC7C660D10A5
+30E85865E0CB78EA760DBBEC
+
+Valid normal tag:
+325887668C7F5160AA0DB66F
+
+mvn package -DskipTests=true

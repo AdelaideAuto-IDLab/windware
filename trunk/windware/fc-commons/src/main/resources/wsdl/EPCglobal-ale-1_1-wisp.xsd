@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+		xmlns:ale="urn:epcglobal:ale:xsd:1" 
+		targetNamespace="urn:epcglobal:ale:xsd:1" 
+		elementFormDefault="unqualified"
+		attributeFormDefault="unqualified" 
+		version="1.0">
+<xsd:import namespace="urn:epcglobal:xsd:1" schemaLocation="EPCglobal.xsd"/>
+<!-- COMMON ELEMENTS -->
+
+<!-- COMMON TYPES -->
+
+  <xsd:complexType name="ECReportSensorDataExtension">
+  	<xsd:sequence>
+  		<xsd:choice>
+  			<xsd:element name="Sensordata" type="ale:SingleValue"
+  				maxOccurs="unbounded">
+  			</xsd:element>
+  			<xsd:element name="MultiValue" type="ale:MultiValue"
+  				maxOccurs="unbounded" minOccurs="0">
+  			</xsd:element>
+  		</xsd:choice>
+  	</xsd:sequence>
+
+  	<xsd:attribute name="Sensor_Tag" type="xsd:string" use="optional"></xsd:attribute>
+  </xsd:complexType>
+
+
+  <xsd:complexType name="SingleValue">
+  	<xsd:attribute name="name" type="xsd:string"></xsd:attribute>
+  	<xsd:attribute name="value" type="xsd:float"></xsd:attribute>
+  	<xsd:attribute name="type" type="xsd:string"></xsd:attribute>
+  	<xsd:attribute name="operationID" type="xsd:string" use="optional"></xsd:attribute>
+  </xsd:complexType>
+
+  <xsd:complexType name="MultiValue">
+  	<xsd:sequence>
+  		<xsd:element name="Value" type="ale:Value"
+  			maxOccurs="unbounded" minOccurs="0">
+  		</xsd:element>
+  	</xsd:sequence>
+  	<xsd:attribute name="name" type="xsd:string"></xsd:attribute>
+  	<xsd:attribute name="Type" type="xsd:string"></xsd:attribute>
+  	<xsd:attribute name="operationID" type="xsd:string" use="optional"></xsd:attribute>
+  </xsd:complexType>
+
+  <xsd:complexType name="Value">
+    <xsd:simpleContent>
+    	<xsd:extension base="xsd:string">
+        <xsd:attribute name="key" type="xsd:string">
+        </xsd:attribute>
+      </xsd:extension>
+   	</xsd:simpleContent>
+  </xsd:complexType>
+
+
+</xsd:schema>

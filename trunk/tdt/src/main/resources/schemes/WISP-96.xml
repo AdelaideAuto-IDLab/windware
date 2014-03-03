@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tdt:epcTagDataTranslation version="0.06" date="2013-05-04T16:30:00Z" epcTDSVersion="1.1r1.27" xmlns:tdt="urn:epcglobal:tdt:xsd:1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:epcglobal:tdt:xsd:1 EpcTagDataTranslation.xsd">
+	<scheme name="WISP-96" optionKey="1" tagLength="96" >
+		<level type="BINARY" prefixMatch="00111101" requiredFormattingParameters="taglength" >
+			<option optionKey="1" pattern="00111101([01]{64})([01]{8})([01]{16})" grammar="'00111101' sensordata tagtype serial" >
+				<field seq="1" decimalMinimum="0" decimalMaximum="18446744073709551615" characterSet="[01]*" bitLength="64" name="sensordata"/>
+				<field seq="2" decimalMinimum="0" decimalMaximum="255" characterSet="[01]*" bitLength="8" name="tagtype"/>
+				<field seq="3" decimalMinimum="0" decimalMaximum="65535" characterSet="[01]*" bitLength="16" name="serial"/>
+			</option>
+		</level>
+		<level type="TAG_ENCODING" prefixMatch="urn:epc:tag:wisp-96" requiredFormattingParameters="taglength" >
+			<option optionKey="1" pattern="urn:epc:tag:wisp-96:([0-9]*)\.([0-9]*)\.([0-9]*)" grammar="'urn:epc:tag:wisp-96:' sensordata '.' tagtype '.' serial" >
+				<field seq="1" decimalMinimum="0" decimalMaximum="18446744073709551615" characterSet="[0-9]*" name="sensordata"/>
+				<field seq="2" decimalMinimum="0" decimalMaximum="255" characterSet="[0-9]*" name="tagtype"/>
+				<field seq="3" decimalMinimum="0" decimalMaximum="65535" characterSet="[0-9]*" name="serial"/>
+			</option>
+		</level>
+		<level type="PURE_IDENTITY" prefixMatch="urn:epc:id:wisp" >
+			<option optionKey="1" pattern="urn:epc:id:wisp:([0-9]*)\.([0-9]*)\.([0-9]*)" grammar="'urn:epc:id:wisp:' sensordata '.' tagtype '.' serial" >
+				<field seq="1" decimalMinimum="0" decimalMaximum="18446744073709551615" characterSet="[0-9]*" name="sensordata"/>
+				<field seq="2" decimalMinimum="0" decimalMaximum="255" characterSet="[0-9]*" name="tagtype"/>
+				<field seq="3" decimalMinimum="0" decimalMaximum="65535" characterSet="[0-9]*" name="serial"/>
+			</option>
+		</level>
+	</scheme>
+</tdt:epcTagDataTranslation>

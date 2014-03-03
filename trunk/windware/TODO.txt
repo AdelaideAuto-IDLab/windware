@@ -1,0 +1,7 @@
+TODO List:
+Date  Description
+--------------------------------------------------------------------------------------------------------------------------------
+03/01/2014  Lookup implementations from spring configuration in DataExtractionManager and OperationManager
+03/01/2014  Acceleration reading correction parameter lookup mechanism for each each tag with ID
+03/01/2014  Fix bug relating to seen time on the tag (LLRP message contain the value but not copied into the corresponding tag instance).
+03/01/2014  Fix bug related to concurrent modification exception 
