@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:ECSpec xmlns:ns2="urn:epcglobal:ale:xsd:1">
+  <logicalReaders>
+    <logicalReader>SpeedwayR-10-3E-E5</logicalReader>
+  </logicalReaders>
+  <boundarySpec>
+    <repeatPeriod unit="MS">2000</repeatPeriod>
+    <duration unit="MS">2000</duration>
+    <stableSetInterval unit="MS">0</stableSetInterval>
+  </boundarySpec>
+  <reportSpecs>
+    <reportSpec reportName="CURRENT_Report">
+      <reportSet set="CURRENT"/>
+      <output includeRawHex="true" includeRawDecimal="true" includeEPC="true" includeTag="true" includeCount="true" includeID="true" includeSensor="true"/>
+      <extension>
+        <statProfileNames>
+          <statProfileName>AntName</statProfileName>
+        </statProfileNames>
+      </extension>
+    </reportSpec>
+    <reportSpec reportName="SENSOR_Tags_Report">
+      <reportSet set="SENSOR"/>
+      <output includeRawHex="true" includeRawDecimal="true" includeEPC="true" includeTag="true" includeCount="true" includeID="true" includeSensor="true"/>
+      <extension>
+        <statProfileNames>
+          <statProfileName>demoSENSOR</statProfileName>
+        </statProfileNames>
+      </extension>
+	  <operations>
+		<Operation name="Average" operationID="average">
+			<arg name="total">8</arg>
+		</Operation>
+		<Operation name="Sum">
+			<arg name="less than">0</arg>
+		</Operation>
+		<Operation name="Sum" operationID="2nd_sum">
+			<arg name="greater than">0</arg>
+		</Operation>
+		<Operation name="Data" operationID="dataStream">
+			<arg name="less than">0</arg>
+			<arg name="extra">10</arg>
+		</Operation>
+		<Operation name="FFT">
+			<arg name="less than">50000</arg>
+			<arg name="greater than">10000</arg>
+		</Operation>
+	  </operations>
+    </reportSpec>
+  </reportSpecs>
+</ns2:ECSpec>
