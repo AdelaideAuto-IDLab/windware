@@ -1,0 +1,20 @@
+#labels Phase-Deploy
+=Using WINDWare=
+
+We have extend fosstrak server and TDT engine to support passive sensor enabled RFID tags.
+
+To build WINDWare please follow the instructions on how dependencies on [https://code.google.com/p/fosstrak/wiki/AleDevGuideHowToBuild fosstrak How to Buld page].
+
+Checkout modified TDT engine from [https://windware.googlecode.com/svn/trunk/tdt/ tdt] directory.
+Using install the modified TDT engine in the local maven repository.
+
+{{{
+mvn clean install
+}}}
+
+
+Then checkout the source in the [https://windware.googlecode.com/svn/trunk/windware/ windware] directory.
+Then run the maven package goal to build the deployable applications. 
+{{{
+mvn clean package
+}}}
