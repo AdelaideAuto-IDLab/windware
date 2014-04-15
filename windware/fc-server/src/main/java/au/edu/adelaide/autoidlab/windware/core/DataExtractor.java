@@ -8,14 +8,14 @@ import org.fosstrak.ale.server.Tag;
  * @author Yu Yan
  * @date 14/04/2013
  */
-public interface DataExtraction {
+public interface DataExtractor {
 	
 	/**
 	 * This method deembeds the the EPC.
 	 * 
 	 * @param tag needs to be deemeded
 	 */
-	void deembeding (Tag tag);
+	void deembed (Tag tag);
 	
 	/**
 	 * This method gets the strings for one tag type.

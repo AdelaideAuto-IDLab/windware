@@ -1,8 +1,9 @@
-package au.edu.adelaide.autoidlab.windware.operation;
+package au.edu.adelaide.autoidlab.windware.acceleration;
 
 import org.fosstrak.ale.server.Tag;
+import org.springframework.stereotype.Component;
 
-import au.edu.adelaide.autoidlab.windware.core.DataExtraction;
+import au.edu.adelaide.autoidlab.windware.core.DataExtractor;
 
 /**
  * This class conducts the calculation for acceleration sensor data
@@ -10,7 +11,8 @@ import au.edu.adelaide.autoidlab.windware.core.DataExtraction;
  * @author Yu Yan
  * @date 15/04/2013
  */
-public class AccelerationImpl implements DataExtraction{
+
+public class AccelerationImpl implements DataExtractor{
 	
 	/** the factor for acceleration standard tag. */
 	private static float ALPHA_STANDARD = 1f;
@@ -36,7 +38,7 @@ public class AccelerationImpl implements DataExtraction{
 	public AccelerationImpl(){};
 
 	@Override
-	public void deembeding(Tag tag) {
+	public void deembed(Tag tag) {
 		// TODO data deembeding and set the sensor value to thte tag
 		String binary = tag.getTagAsBinary();
 		String epc = binaryToBytes(binary);
@@ -62,9 +64,9 @@ public class AccelerationImpl implements DataExtraction{
 		{
 			tag.setIsSensor(true);
 		}
-		
+		AccelerationTag data = new AccelerationTag(deembed[2].toLowerCase());
 		String sensordata = deembed[1];
-		tag.getSensorData().setSensordata(sensordata);
+		data.setSensordata(sensordata);
 		
 		String x = deembed[1].substring(0, 4);
 		int x_data = Integer.parseInt(x, 16);
@@ -78,7 +80,6 @@ public class AccelerationImpl implements DataExtraction{
 			acceleration_x = 100 * ALPHA_STANDARD * x_data / 1024;
 		}
 		float x_axis = 100 - acceleration_x;
-		tag.getSensorData().setX_Axis(x_axis);
 		
 		String y = deembed[1].substring(4, 8);
 		int y_data = Integer.parseInt(y, 16);
@@ -92,7 +93,7 @@ public class AccelerationImpl implements DataExtraction{
 			acceleration_y = 100 * ALPHA_STANDARD * y_data / 1024;
 		}
 		float y_axis = 100 - acceleration_y;
-		tag.getSensorData().setY_Axis(y_axis);
+		data.setY_Axis(y_axis);
 		
 		String z = deembed[1].substring(8, 12);
 		int z_data = Integer.parseInt(z, 16);
@@ -106,10 +107,10 @@ public class AccelerationImpl implements DataExtraction{
 			acceleration_z = 100 * ALPHA_STANDARD * z_data / 1024;
 		}
 		float z_axis = acceleration_z;
-		tag.getSensorData().setZ_Axis(z_axis);
+		data.setZ_Axis(z_axis);
 		
 		// Do corrections
-    //todo: Ideally these values need to be looked up for each tag
+		//todo: Ideally these values need to be looked up for each tag
 		double corx = 1.119;
 		double cory = 1.105;
 		double corz = 0.8741;
@@ -117,18 +118,17 @@ public class AccelerationImpl implements DataExtraction{
 		double diy = 11.3;
 		double diz =8.79; 
 
-		float xp = (float) ((tag.getSensorData().getX_Axis())*corx);
-		float yp = (float) (tag.getSensorData().getY_Axis()*cory);
-		float zp =(float) (tag.getSensorData().getZ_Axis()*corz);
+		float xp = (float) (x_axis*corx);
+		float yp = (float) (y_axis*cory);
+		float zp =(float) (z_axis*corz);
 
-		tag.getSensorData().setX_Axis((float) ((xp-50)/dix));
-		tag.getSensorData().setY_Axis((float) ((yp-50)/diy));
-		tag.getSensorData().setZ_Axis((float) ((zp-50)/diz));
+		data.setX_Axis((float) ((xp-50)/dix));
+		data.setY_Axis((float) ((yp-50)/diy));
+		data.setZ_Axis((float) ((zp-50)/diz));
 		
 		String hw = deembed[3];
-		tag.getSensorData().setHWSerial(hw);
-		
-		tag.getSensorData().setSensordata(CLEAR_SENSOR);
+		data.setHWSerial(hw);
+		tag.setSensorData(data);
 		
 	}
 	

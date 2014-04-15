@@ -49,7 +49,7 @@ import org.fosstrak.reader.rprm.core.msg.reply.ReadReportType.SourceReport;
 import org.fosstrak.reader.rprm.core.msg.reply.TagEventType;
 import org.fosstrak.reader.rprm.core.msg.reply.TagType;
 
-import au.edu.adelaide.autoidlab.windware.core.AccelerationTag;
+import au.edu.adelaide.autoidlab.windware.acceleration.AccelerationTag;
 import au.edu.adelaide.autoidlab.windware.core.SensorData;
 
 /**

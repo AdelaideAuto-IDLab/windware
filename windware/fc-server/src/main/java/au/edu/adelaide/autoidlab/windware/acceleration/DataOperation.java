@@ -1,4 +1,4 @@
-package au.edu.adelaide.autoidlab.windware.operation;
+package au.edu.adelaide.autoidlab.windware.acceleration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,10 +76,17 @@ public class DataOperation implements Operation {
 		for(int m=0;m<count;m++)
 		{
 			Value v = new Value();
+			AccelerationTag tag = null;
+			Tag data = tags.get(m);
+			if(data.getSensorData() instanceof AccelerationTag){
+				tag = (AccelerationTag) data.getSensorData();
+			}else{
+				continue;
+			}
 			v.setKey(String.valueOf(tags.get(m).getTimestamp()));
-			v.setValue(String.valueOf(tags.get(m).getSensorData().getX_Axis()));
+			v.setValue(String.valueOf(tag.getX_Axis()));
 			
-			float x_value = tags.get(m).getSensorData().getX_Axis();
+			float x_value = tag.getX_Axis();
 			
 			if(args.containsKey(LESS_THAN) && !args.containsKey(GREATER_THAN))
 			{
@@ -121,10 +128,18 @@ public class DataOperation implements Operation {
 		for(int m=0;m<count;m++)
 		{
 			Value v = new Value();
-			v.setKey(String.valueOf(tags.get(m).getTimestamp()));
-			v.setValue(String.valueOf(tags.get(m).getSensorData().getY_Axis()));
+			AccelerationTag tag = null;
+			Tag data = tags.get(m);
+			if(data.getSensorData() instanceof AccelerationTag){
+				tag = (AccelerationTag) data.getSensorData();
+			}else{
+				continue;
+			}
 			
-			float y_value = tags.get(m).getSensorData().getY_Axis();
+			v.setKey(String.valueOf(tags.get(m).getTimestamp()));
+			v.setValue(String.valueOf(tag.getY_Axis()));
+			
+			float y_value = tag.getY_Axis();
 			
 			if(args.containsKey(LESS_THAN) && !args.containsKey(GREATER_THAN))
 			{
@@ -165,10 +180,19 @@ public class DataOperation implements Operation {
 		for(int m=0;m<count;m++)
 		{
 			Value v = new Value();
-			v.setKey(String.valueOf(tags.get(m).getTimestamp()));
-			v.setValue(String.valueOf(tags.get(m).getSensorData().getZ_Axis()));
 			
-			float z_value = tags.get(m).getSensorData().getZ_Axis();
+			AccelerationTag tag = null;
+			Tag data = tags.get(m);
+			if(data.getSensorData() instanceof AccelerationTag){
+				tag = (AccelerationTag) data.getSensorData();
+			}else{
+				continue;
+			}
+			
+			v.setKey(String.valueOf(tags.get(m).getTimestamp()));
+			v.setValue(String.valueOf(tag.getZ_Axis()));
+			
+			float z_value = tag.getZ_Axis();
 			
 			if(args.containsKey(LESS_THAN) && !args.containsKey(GREATER_THAN))
 			{

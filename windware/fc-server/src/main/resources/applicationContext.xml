@@ -13,10 +13,13 @@
 
 	<import resource="classpath:META-INF/cxf/cxf.xml" />
     <import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
+    <import resource="dataextration.xml" />
+    <import resource="operation.xml" />
 
 	<context:annotation-config />
 	<context:property-placeholder location="classpath*:ale.properties"/>
-	<context:component-scan base-package="org.fosstrak.ale" />
+
+	<context:component-scan base-package="*" />
 	
 	<jaxws:endpoint id="ALEService"
 	   implementor="org.fosstrak.ale.wsdl.ale.epcglobal.ALEServicePortTypeImpl"

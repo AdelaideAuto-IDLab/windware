@@ -1,4 +1,4 @@
-package au.edu.adelaide.autoidlab.windware.operation;
+package au.edu.adelaide.autoidlab.windware.acceleration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,23 +43,23 @@ public class AverageOperation implements Operation {
 	public ArrayList<SingleValue> getSingleValue(List<Tag> tags, Map<String, String> args, String id) {
 		// TODO get all single values for average operation
 		ArrayList<SingleValue> single_value = new ArrayList<SingleValue>();
-		
+		List<AccelerationTag> tagList = convert(tags);
 		SingleValue sv_aver_x = new SingleValue();
-		float x_ave = this.x_aveg(tags, args);
+		float x_ave = this.x_aveg(tagList, args);
 		sv_aver_x.setName(X);
 		sv_aver_x.setType(TYPE_FLOAT);
 		sv_aver_x.setOperationID(id);
 		sv_aver_x.setValue(x_ave);
 		
 		SingleValue sv_aver_y = new SingleValue();
-		float y_ave = this.y_aveg(tags, args);
+		float y_ave = this.y_aveg(tagList, args);
 		sv_aver_y.setName(Y);
 		sv_aver_y.setType(TYPE_FLOAT);
 		sv_aver_y.setOperationID(id);
 		sv_aver_y.setValue(y_ave);
 		
 		SingleValue sv_aver_z = new SingleValue();
-		float z_ave = this.z_aveg(tags, args);
+		float z_ave = this.z_aveg(tagList, args);
 		sv_aver_z.setName(Z);
 		sv_aver_z.setType(TYPE_FLOAT);
 		sv_aver_z.setOperationID(id);
@@ -141,7 +141,7 @@ public class AverageOperation implements Operation {
 	 * 
 	 * @param tags
 	 */
-	private float x_aveg(List<Tag> tags, Map<String, String> args)
+	private float x_aveg(List<AccelerationTag> tags, Map<String, String> args)
 	{
 		
 		int number = 0;
@@ -171,7 +171,7 @@ public class AverageOperation implements Operation {
 		float sum = 0f;
 		for(int i = 0; i < count; i++)
 		{
-			sum += tags.get(i).getSensorData().getX_Axis();
+			sum += tags.get(i).getX_Axis();
 		}
 		float aveg = sum / count ;
 		
@@ -183,7 +183,7 @@ public class AverageOperation implements Operation {
 	 * 
 	 * @param tags
 	 */
-	private float y_aveg(List<Tag> tags, Map<String, String> args)
+	private float y_aveg(List<AccelerationTag> tags, Map<String, String> args)
 	{
 		int number = 0;
 		if(args.containsKey(TOTAL))
@@ -208,7 +208,7 @@ public class AverageOperation implements Operation {
 		float sum = 0f;
 		for(int i = 0; i < count; i++)
 		{
-			sum += tags.get(i).getSensorData().getY_Axis();
+			sum += tags.get(i).getY_Axis();
 		}
 		float aveg = sum / count;
 		
@@ -220,7 +220,7 @@ public class AverageOperation implements Operation {
 	 * 
 	 * @param tags
 	 */
-	private float z_aveg(List<Tag> tags, Map<String, String> args)
+	private float z_aveg(List<AccelerationTag> tags, Map<String, String> args)
 	{
 		int number = 0;
 		if(args.containsKey(TOTAL))
@@ -245,11 +245,22 @@ public class AverageOperation implements Operation {
 		float sum = 0f;
 		for(int i = 0; i < count; i++)
 		{
-			sum += tags.get(i).getSensorData().getZ_Axis();
+			sum += tags.get(i).getZ_Axis();
 		}
 		float aveg = sum / count;
 		
 		return aveg;
 	}
 
+	private List<AccelerationTag> convert(List<Tag> tags){
+		List<AccelerationTag> accn = new ArrayList<AccelerationTag>(tags.size());
+		for(Tag t : tags){
+			if (t.getSensorData() instanceof AccelerationTag){
+				accn.add((AccelerationTag)t.getSensorData());
+			}
+		}
+		
+		return accn;
+	}
+	
 }

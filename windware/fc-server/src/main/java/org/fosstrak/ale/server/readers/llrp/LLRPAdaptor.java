@@ -352,7 +352,8 @@ public class LLRPAdaptor extends BaseReader {
 							tag.setTagID(binary.getBytes());
 							tag.setReader(readerName);
 							tag.addTrace(getName());
-							tag.setTimestamp(System.currentTimeMillis());
+							//tag.setTimestamp(System.currentTimeMillis());
+							tag.setTimestamp(tagData.getFirstSeenTimestampUTC().getMicroseconds().toLong()); // Asanga: added the correct time stamp
 
 							//ORANGE: add additional values if they exist
 							tag.setTagLength(length);

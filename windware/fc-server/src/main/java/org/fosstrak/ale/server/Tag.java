@@ -3,7 +3,7 @@ package org.fosstrak.ale.server;
 
 import org.fosstrak.ale.util.HexUtil;
 
-import au.edu.adelaide.autoidlab.windware.core.AccelerationTag;
+import au.edu.adelaide.autoidlab.windware.acceleration.AccelerationTag;
 import au.edu.adelaide.autoidlab.windware.core.SensorData;
 
 /**

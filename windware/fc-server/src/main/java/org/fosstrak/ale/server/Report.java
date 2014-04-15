@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+
 import org.apache.log4j.Logger;
 import org.fosstrak.ale.exception.ECSpecValidationException;
 import org.fosstrak.ale.exception.ImplementationException;
@@ -58,9 +59,10 @@ import org.fosstrak.ale.xsd.ale.epcglobal.ECSightingStat;
 import org.fosstrak.ale.xsd.ale.epcglobal.ECTagStat;
 import org.fosstrak.ale.xsd.ale.epcglobal.ECTagStat.StatBlocks;
 import org.fosstrak.tdt.TDTEngine;
+
+import au.edu.adelaide.autoidlab.windware.core.DataExtractionManager;
+import au.edu.adelaide.autoidlab.windware.core.DataOperationManager;
 import au.edu.adelaide.autoidlab.windware.core.Operation;
-import au.edu.adelaide.autoidlab.windware.operation.DataExtractionManager;
-import au.edu.adelaide.autoidlab.windware.operation.DataOperationManager;
 
 /**
  * This class represents a report. It filters and groups tags, add them to the
@@ -150,12 +152,12 @@ public class Report {
 		// set currentEventCycle
 		this.currentEventCycle = currentEventCycle;
 
-		this.de = new DataExtractionManager();
+		this.de = ALEApplicationContext.getBean(DataExtractionManager.class);
 
 		// acturaltags = new HashMap<String, ArrayList<Tag>>();
 		tags_reader_group = new HashMap<String, Map<String, ArrayList<Tag>>>();
 		duplicateTags = new HashMap<String, Tag>();
-		data_Operation_Manager = new DataOperationManager();
+		data_Operation_Manager = ALEApplicationContext.getBean(DataOperationManager.class);
 
 		// init patterns
 		initFilterPatterns();
@@ -262,6 +264,7 @@ public class Report {
 	public ECReport getECReport() throws ECSpecValidationException,
 			ImplementationException {
 		Set<Tag> currentCycleTags = currentEventCycle.getTags();
+		int size = currentCycleTags.size();
 		Set<Tag> lastCycleTags = currentEventCycle.getLastEventCycleTags();
 
 		long start_time = System.nanoTime();
@@ -459,23 +462,23 @@ public class Report {
 		LogicalReader wisp_LR = new LogicalReader();
 
 		Set<String> all_LR_set = tags_reader_group.keySet();
-		ArrayList<String> all_LR = new ArrayList(all_LR_set);
+		ArrayList<String> all_LR = new ArrayList<String>(all_LR_set);
 
 		for (int i = 0; i < all_LR.size(); i++) {
 			Map<String, ArrayList<Tag>> lr_tags_list = tags_reader_group
 					.get(all_LR.get(i));
 			SensorGroup wispgroup = new SensorGroup();
 			wispgroup.setLogicalReader(all_LR.get(i));
-			Iterator it = lr_tags_list.entrySet().iterator();
+			Iterator<Entry<String, ArrayList<Tag>>> it = lr_tags_list.entrySet().iterator();
 			while (it.hasNext()) {
 				ECReportSensorDataExtension ecsde = new ECReportSensorDataExtension();
 
-				Entry obj = (Entry) it.next();
-				String hwS = (String) obj.getKey();
+				Entry<String, ArrayList<Tag>> obj = it.next();
 
-				ArrayList<Tag> tags_per_hw = (ArrayList<Tag>) obj.getValue();
+				ArrayList<Tag> tags_per_hw =  obj.getValue();
 				boolean is_sensor = tags_per_hw.get(0).getIsSensor();
 				 String tagId=   tags_per_hw.get(0).getTagIDAsPureURI();
+				 String hwS = tags_per_hw.get(0).getSensorData().getHWSerial();
 
 				if (tags_per_hw.get(0).getReader().equals(all_LR.get(i))
 						&& is_sensor == true) {
@@ -641,9 +644,9 @@ public class Report {
 		ECReportGroupListMember groupMember;
 
 		// get rid of the duplicated tags
-		if (!duplicateTags.containsKey(tag.getSensorData().getHWSerial())) {
+		if (!duplicateTags.containsKey(tag.getTagIDAsPureURI())) { //updated to have pure URI
 
-			duplicateTags.put(tag.getSensorData().getHWSerial(), tag);
+			duplicateTags.put(tag.getTagIDAsPureURI(), tag);
 			tagURI = tag.getTagIDAsPureURI();
 			// if this one is null, try something different to compense
 			// crashes...
@@ -763,7 +766,7 @@ public class Report {
 		// out put members
 		// group the tags
 		String readerName = tag.getReader();
-		String hws = tag.getSensorData().getHWSerial();
+		String hws = tag.getTagIDAsPureURI();
 		if (!tags_reader_group.containsKey(readerName)) {
 			HashMap<String, ArrayList<Tag>> tag_list = new HashMap<String, ArrayList<Tag>>();
 
