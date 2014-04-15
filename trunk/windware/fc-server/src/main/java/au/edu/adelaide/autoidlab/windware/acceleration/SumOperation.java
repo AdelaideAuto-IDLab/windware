@@ -1,4 +1,4 @@
-package au.edu.adelaide.autoidlab.windware.operation;
+package au.edu.adelaide.autoidlab.windware.acceleration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -162,7 +162,7 @@ public class SumOperation implements Operation {
 		float sum = 0f;
 		for(int i = 0; i < count; i++)
 		{
-			sum += tags.get(i).getSensorData().getX_Axis();
+			sum += ((AccelerationTag) tags.get(i).getSensorData()).getX_Axis();
 		}
 		
 		return sum;
@@ -199,7 +199,7 @@ public class SumOperation implements Operation {
 		}
 		for(int i = 0; i < count; i++)
 		{
-			sum += tags.get(i).getSensorData().getY_Axis();
+			sum += ((AccelerationTag) tags.get(i).getSensorData()).getY_Axis();
 		}
 		
 		return sum;
@@ -235,7 +235,7 @@ public class SumOperation implements Operation {
 		}
 		for(int i = 0; i < count; i++)
 		{
-			sum += tags.get(i).getSensorData().getZ_Axis();
+			sum += ((AccelerationTag) tags.get(i).getSensorData()).getZ_Axis();
 		}
 		
 		return sum;

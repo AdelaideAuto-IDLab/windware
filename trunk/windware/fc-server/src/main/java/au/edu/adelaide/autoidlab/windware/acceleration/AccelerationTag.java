@@ -1,4 +1,7 @@
-package au.edu.adelaide.autoidlab.windware.core;
+package au.edu.adelaide.autoidlab.windware.acceleration;
+
+import au.edu.adelaide.autoidlab.windware.core.SensorData;
+
 /**
  * This interface represents the identification of the sensor data
  * 
@@ -15,12 +18,6 @@ public class AccelerationTag extends SensorData{
 	
 	/** z Axis of acceleration. */
 	private float z_Axis;
-	
-	/** sensor data. */
-	private String sensordata;
-	
-	/** HW Serial #. */
-	private String hwSerial;
 	
 	/**
 	 * Constructor
@@ -63,22 +60,6 @@ public class AccelerationTag extends SensorData{
 	}
 	
 	/**
-	 * get the sensor data field
-	 */
-	public String getSensorData()
-	{
-		return sensordata;
-	}
-	
-	/**
-	 * get the hwSerial
-	 */
-	public String getHWSerial()
-	{
-		return hwSerial;
-	}
-	
-	/**
 	 * set x axis
 	 * 
 	 * @param x the x axis
@@ -106,24 +87,6 @@ public class AccelerationTag extends SensorData{
 	public void setZ_Axis(float z)
 	{
 		this.z_Axis = z;
-	}
-	
-	/**
-	 * set z axis
-	 * 
-	 * @param z the z axis
-	 */
-	public void setSensordata(String sensordata)
-	{
-		this.sensordata = sensordata;
-	}
-	
-	/**
-	 * set the hwSerial
-	 */
-	public void setHWSerial(String hwSeiral)
-	{
-		this.hwSerial = hwSeiral;
 	}
 	
 }

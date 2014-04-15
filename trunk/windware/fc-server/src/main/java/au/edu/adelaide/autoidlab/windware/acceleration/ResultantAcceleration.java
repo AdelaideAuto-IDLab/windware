@@ -1,6 +1,6 @@
 
 
-package au.edu.adelaide.autoidlab.windware.operation;
+package au.edu.adelaide.autoidlab.windware.acceleration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,8 +11,8 @@ import org.fosstrak.ale.xsd.ale.epcglobal.MultiValue;
 import org.fosstrak.ale.xsd.ale.epcglobal.SingleValue;
 import org.fosstrak.ale.xsd.ale.epcglobal.Value;
 
-import au.edu.adelaide.autoidlab.windware.core.AccelerationTag;
 import au.edu.adelaide.autoidlab.windware.core.Operation;
+import au.edu.adelaide.autoidlab.windware.core.SensorData;
 
 /**
  * This is the resultant acceleration operation implementation for the WISP tag.
@@ -108,9 +108,9 @@ public class ResultantAcceleration implements Operation {
 	}
 
 	private List<Double> getResultant(List<Tag> tags) {
-		List<Double> out = new ArrayList<Double>(tags.size());
-		for (Tag t : tags) {
-			AccelerationTag data = (AccelerationTag) t.getSensorData();
+		List<AccelerationTag> accn = convert(tags);
+		List<Double> out = new ArrayList<Double>(accn.size());
+		for (AccelerationTag data : accn) {
 			double res = Math.sqrt(data.getX_Axis() * data.getX_Axis()
 					+ data.getY_Axis() * data.getY_Axis() + data.getZ_Axis()
 					* data.getZ_Axis());
@@ -118,6 +118,17 @@ public class ResultantAcceleration implements Operation {
 		}
 
 		return out;
+	}
+	
+	private List<AccelerationTag> convert(List<Tag> tags){
+		List<AccelerationTag> accn = new ArrayList<AccelerationTag>(tags.size());
+		for(Tag t : tags){
+			if (t.getSensorData() instanceof AccelerationTag){
+				accn.add((AccelerationTag)t.getSensorData());
+			}
+		}
+		
+		return accn;
 	}
 
 }

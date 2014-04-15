@@ -10,6 +10,10 @@ public abstract class SensorData {
 
 	/** sensor data type. */
 	private String sensorDataType;
+	/** sensor data. */
+	private String sensordata;
+	/** HW Serial #. */
+	private String hwSerial;
 	
 	/**
 	 * Constructor
@@ -41,64 +45,34 @@ public abstract class SensorData {
 	{
 		this.sensorDataType = sensorType;
 	}
-	
+
 	/**
-	 * This method gets the x axis.
+	 * get the sensor data field
 	 */
-	public abstract float getX_Axis();
-	
+	public String getSensorData() {
+		return sensordata;
+	}
+
 	/**
-	 * This method gets the y axis.
+	 * get the hwSerial
 	 */
-	public abstract float getY_Axis();
-	
+	public String getHWSerial() {
+		return hwSerial;
+	}
+
 	/**
-	 * This method gets the z axis.
-	 */
-	public abstract float getZ_Axis();
-	
-	/**
-	 * This method gets the sensor data from an EPC.
-	 */
-	public abstract String getSensorData();
-	
-	/**
-	 * This method gets the hardware serial number from an EPC.
-	 */
-	public abstract String getHWSerial();
-	
-	/**
-	 * This method sets the x axis to the tag.
+	 * set z axis
 	 * 
-	 * @param x axis
+	 * @param z the z axis
 	 */
-	public abstract void setX_Axis(float x);
-	
+	public void setSensordata(String sensordata) {
+		this.sensordata = sensordata;
+	}
+
 	/**
-	 * This method sets the y axis to the tag.
-	 * 
-	 * @param y axis
+	 * set the hwSerial
 	 */
-	public abstract void setY_Axis(float y);
-	
-	/**
-	 * This method sets the z axis to the tag.
-	 * 
-	 * @param z axis
-	 */
-	public abstract void setZ_Axis(float z);
-	
-	/**
-	 * This method sets the sensor data to the tag.
-	 * 
-	 * @param sensor data
-	 */
-	public abstract void setSensordata(String sensordata);
-	
-	/**
-	 * This method sets the hardware serial number to the tag.
-	 * 
-	 * @param hardware serial number
-	 */
-	public abstract void setHWSerial(String hwSeiral);
+	public void setHWSerial(String hwSeiral) {
+		this.hwSerial = hwSeiral;
+	}
 }

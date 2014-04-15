@@ -1,4 +1,4 @@
-package au.edu.adelaide.autoidlab.windware.operation;
+package au.edu.adelaide.autoidlab.windware.acceleration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -228,7 +228,7 @@ public class FFTOperation implements Operation
 		double[] fft_x_axis = new double[tags.size()];
 		for(int i=0;i<tags.size();i++)
 		{
-			fft_x_axis[i] = tags.get(i).getSensorData().getX_Axis();
+			fft_x_axis[i] = ((AccelerationTag) tags.get(i).getSensorData()).getX_Axis();
 		}
 		fft_x_complex = fft_xs.transform(fft_x_axis, TransformType.FORWARD);
 		double[] result = new double[fft_x_axis.length];
@@ -257,7 +257,7 @@ public class FFTOperation implements Operation
 		double[] fft_y_axis = new double[tags.size()];
 		for(int i=0;i<tags.size();i++)
 		{
-			fft_y_axis[i] = tags.get(i).getSensorData().getY_Axis();
+			fft_y_axis[i] = ((AccelerationTag) tags.get(i).getSensorData()).getY_Axis();
 		}
 		fft_y_complex = fft_ys.transform(fft_y_axis, TransformType.FORWARD);
 		double[] result = new double[fft_y_axis.length];
@@ -286,7 +286,7 @@ public class FFTOperation implements Operation
 		double[] fft_z_axis = new double[tags.size()];
 		for(int i=0;i<tags.size();i++)
 		{
-			fft_z_axis[i] = tags.get(i).getSensorData().getZ_Axis();
+			fft_z_axis[i] = ((AccelerationTag) tags.get(i).getSensorData()).getZ_Axis();
 		}
 		fft_z_complex = fft_zs.transform(fft_z_axis, TransformType.FORWARD);
 		double[] result = new double[fft_z_axis.length];
@@ -367,5 +367,7 @@ public class FFTOperation implements Operation
 		
 		return tags;
 	}
+	
+	
 	
 }

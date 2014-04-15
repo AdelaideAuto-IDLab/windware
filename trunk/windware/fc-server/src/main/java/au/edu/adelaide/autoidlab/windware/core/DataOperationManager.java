@@ -1,10 +1,20 @@
-package au.edu.adelaide.autoidlab.windware.operation;
+package au.edu.adelaide.autoidlab.windware.core;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
-import org.fosstrak.ale.server.Tag;
+import java.util.List;
 
-import au.edu.adelaide.autoidlab.windware.core.Operation;
+import javax.annotation.PostConstruct;
+
+import org.fosstrak.ale.server.Tag;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import au.edu.adelaide.autoidlab.windware.acceleration.AverageOperation;
+import au.edu.adelaide.autoidlab.windware.acceleration.DataOperation;
+import au.edu.adelaide.autoidlab.windware.acceleration.FFTOperation;
+import au.edu.adelaide.autoidlab.windware.acceleration.ResultantAcceleration;
+import au.edu.adelaide.autoidlab.windware.acceleration.SumOperation;
 
 /**
  * manages all data operations
@@ -12,6 +22,7 @@ import au.edu.adelaide.autoidlab.windware.core.Operation;
  * @date 22/05/2013
  *
  */
+@Component
 public class DataOperationManager {
 
 	/** Map the operation name and operation */
@@ -23,15 +34,22 @@ public class DataOperationManager {
 	/**
 	 * Constructor
 	 */
+	
+	@Autowired
+	private List<Operation> availableOperations;
+	
+	@PostConstruct
+	public void iniPostConstruct(){
+		if (availableOperations!=null){
+			for(Operation op:availableOperations){
+				tag_operation.put(op.getName(), op);
+			}
+		}
+	}
+	
 	public DataOperationManager()
 	{
-		//TODO: need to get the definitions from spring configuration
-		tag_operation.put("Average", new AverageOperation());
-		tag_operation.put("FFT", new FFTOperation());
-		tag_operation.put("Sum", new SumOperation());
-		tag_operation.put("Data", new DataOperation());
-		ResultantAcceleration ra = new ResultantAcceleration();
-		tag_operation.put(ra.getName(), ra);
+		
 
 	}
 	
